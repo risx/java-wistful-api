@@ -4,13 +4,13 @@ import java.util.UUID;
 
 public class Game {
     public String gid; // uuid for game
-    public final String id; //id for mapping other games
+    public final Integer id; //id for mapping other games
 
     private Board board;
     public Integer[] selector_position = {1, 1};
     public Integer score;
 
-    public Game(String id){
+    public Game(Integer id){
         UUID uuid = UUID.randomUUID();
         String randomUUIDString = uuid.toString();
 

@@ -19,19 +19,38 @@ public class GameController {
         return "Cya space cowboy!";
     }
 
-    @RequestMapping(value = "/g/{id}/{leftmove}/{rightmove}",
-            method = RequestMethod.GET, produces = "application/json")
-    //public Game game(@RequestParam(value="id", defaultValue="null") Integer id) {
+    @RequestMapping(value = "/g/{id}/{xmove}/{ymove}/{action}", method = RequestMethod.GET, produces = "application/json")
     public Game game(@PathVariable("id") Integer id,
-                     @PathVariable("leftmove") Integer leftmove,
-                     @PathVariable("rightmove") Integer rightmove){
+                     @PathVariable("xmove") Integer xmove,
+                     @PathVariable("ymove") Integer ymove,
+                     @PathVariable("action") Integer action) {
+        Integer x = xmove;
+        Integer y = ymove;
+        Integer a = action; //0 neutral, 1 switch blocks, 2 pause/resume, 3 quit
 
-        Integer left = leftmove;
-        Integer right = rightmove;
-
-        if (existantgames.get(id) == null){
-            existantgames.put(id, new Game(id));
+        if (existantgames.get(id) == null) {
+            existantgames.put(id, new Game(id, x, y));
+            existantgames.get(id).initBoard();
         }
+        if (x <= 5 && x >= 0) {
+            existantgames.get(id).selector_position[0] = x;
+        }
+        if (y <= 14 && y >= 0) {
+            existantgames.get(id).selector_position[1] = y;
+        }
+        switch (a) {
+            case 0: //no action
+                break;
+            case 1: //switch blocks based on cursor position
+                existantgames.get(id).Switch();
+                break;
+            case 2: //pause / resume timer
+                break;
+            case 3: //quit game
+                existantgames.remove(id);
+                break;
+        }
+
         return existantgames.get(id);
     }
 }

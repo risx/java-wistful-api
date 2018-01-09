@@ -39,7 +39,15 @@ class Board {
         return board;
     }
 
-    void moveUp(){
+    public void Switch(Integer x, Integer y) {
+        Block block_one = board[y][x];
+        Block block_two = board[y][x + 1];
+
+        board[y][x]     = block_two;
+        board[y][x + 1] = block_one;
+    }
+
+    public void moveUp(){
         y++;
     }
 

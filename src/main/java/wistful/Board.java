@@ -51,4 +51,12 @@ class Board {
         y++;
     }
 
+    public void findMatching() {
+        for (int x = 0; x < cols; x++) {
+            for (int y = 0; x < rows; y++){
+                Block block = board[y][x];
+            }
+        }
+    }
+
 }

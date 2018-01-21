@@ -1,5 +1,6 @@
 package wistful;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -10,7 +11,7 @@ public class GameController {
 
     @RequestMapping("/")
     public String index() {
-        return "Oh, hey, I didn't see you there.";
+        return "index";
     }
 
     @RequestMapping(value = "/ping", method = RequestMethod.GET,
@@ -19,38 +20,31 @@ public class GameController {
         return "Cya space cowboy!";
     }
 
-    @RequestMapping(value = "/g/{id}/{xmove}/{ymove}/{action}", method = RequestMethod.GET, produces = "application/json")
-    public Game game(@PathVariable("id") Integer id,
-                     @PathVariable("xmove") Integer xmove,
-                     @PathVariable("ymove") Integer ymove,
-                     @PathVariable("action") Integer action) {
-        Integer x = xmove;
-        Integer y = ymove;
-        Integer a = action; //0 neutral, 1 switch blocks, 2 pause/resume, 3 quit
+    @RequestMapping("/g/{id}/switch")
+    public void switchSelector(@PathVariable("id") Integer id){
+        existantgames.get(id).Switch();
 
+    }
+
+    @RequestMapping("/g/{id}")
+    public Game game(@PathVariable("id") Integer id){
         if (existantgames.get(id) == null) {
-            existantgames.put(id, new Game(id, x, y));
+            existantgames.put(id, new Game(id));
             existantgames.get(id).initBoard();
-        }
-        if (x <= 5 && x >= 0) {
-            existantgames.get(id).selector_position[0] = x;
-        }
-        if (y <= 14 && y >= 0) {
-            existantgames.get(id).selector_position[1] = y;
-        }
-        switch (a) {
-            case 0: //no action
-                break;
-            case 1: //switch blocks based on cursor position
-                existantgames.get(id).Switch();
-                break;
-            case 2: //pause / resume timer
-                break;
-            case 3: //quit game
-                existantgames.remove(id);
-                break;
-        }
-
+        };
         return existantgames.get(id);
     }
+
+    @RequestMapping("/g/{id}/move/{direction}")
+    public Game moveSelector(@PathVariable("id") Integer id, @PathVariable("direction") Integer direction){
+        //down, up, left, right
+        existantgames.get(id).moveSelector(direction);
+        return existantgames.get(id);
+    }
+
+    @RequestMapping("/g/{id}/pause")
+    public void pauseGamer(@PathVariable("id") Integer id){
+
+    }
+
 }

@@ -14,13 +14,12 @@ public class GameController {
         return "index";
     }
 
-    @RequestMapping(value = "/ping", method = RequestMethod.GET,
-            produces = "application/json")
+    @RequestMapping(value = "/ping", method = RequestMethod.GET)
     public String ping() {
         return "Cya space cowboy!";
     }
 
-    @RequestMapping("/g/{id}/switch")
+    @RequestMapping(value = "/g/{id}/switch", method = RequestMethod.GET)
     public void switchSelector(@PathVariable("id") Integer id){
         existantgames.get(id).Switch();
 
@@ -31,7 +30,7 @@ public class GameController {
         if (existantgames.get(id) == null) {
             existantgames.put(id, new Game(id));
             existantgames.get(id).initBoard();
-        };
+        }
         return existantgames.get(id);
     }
 
@@ -42,7 +41,7 @@ public class GameController {
         return existantgames.get(id);
     }
 
-    @RequestMapping("/g/{id}/pause")
+    @RequestMapping(value = "/g/{id}/pause", method = RequestMethod.GET)
     public void pauseGamer(@PathVariable("id") Integer id){
 
     }

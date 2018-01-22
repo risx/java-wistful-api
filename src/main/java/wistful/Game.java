@@ -25,19 +25,28 @@ public class Game {
     }
 
     public void moveSelector(Integer direction){
-        if (selector_position[0] < 6 && selector_position[0] > -1
-                && selector_position[1] < 15 && selector_position[1] > -1) {
-            switch (direction) {
+            switch (direction){
                 case 0: //left
-                    this.selector_position[0] += 1;
+                    if (this.selector_position[0] > 0) {
+                        this.selector_position[0] -= 1;
+                    }
+                    break;
                 case 1: //right
-                    this.selector_position[0] -= 1;
+                    if (this.selector_position[0] < board.cols) {
+                        this.selector_position[0] += 1;
+                    }
+                    break;
                 case 2: //up
-                    this.selector_position[1] -= 1;
+                    if (this.selector_position[1] > 0){
+                        this.selector_position[1] -= 1;
+                    }
+                    break;
                 case 3: //down
-                    this.selector_position[1] += 1;
+                    if (this.selector_position[1] < board.rows){
+                        this.selector_position[1] += 1;
+                    }
+                    break;
             }
-        }
     }
 
     public void initBoard(){

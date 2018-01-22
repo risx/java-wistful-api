@@ -5,9 +5,8 @@ package wistful;
 import java.util.Random;
 
 class Board {
-    //actually 14 but 1 extra for a buffer row
-    Integer rows = 15;
-    Integer cols = 6;
+    Integer rows = 13; // 12 but 0 is + 1
+    Integer cols = 5; // 6 but 0 is + 1
     public Integer y = 0;
 
     Random rand = new Random();
